@@ -14,7 +14,7 @@ pipeline {
                git branch: 'main', url: 'https://github.com/SreejithAWS/Login_Page.git'
         }
     }
-    stage('Comple') {
+    stage('Compile') {
         steps {
               sh 'mvn compile'
         }
@@ -31,10 +31,8 @@ pipeline {
     }
     stage('Sonarqube Analysis') {
         steps {
-            withSonarQubeEnv('sonarqube_server') {
-                 sh ''' $SCANNER_HOME/bin/sonar-scanner \
-                    -Dsonar.projectName=Login_Page \
-                    -Dsonar.projectKey=Login_Page \
+            withSonarQubeEnv('sonar-server') {
+                 sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Login_Page -Dsonar.projectKey=Login_Page \
                     -Dsonar.java.binaries=target '''
              }
         }
