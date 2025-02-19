@@ -7,36 +7,26 @@ pipeline {
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
     }
-
-    stages {
         stage('Git checkout') {
             steps {
                git branch: 'main', url: 'https://github.com/SreejithAWS/Login_Page.git'
             }
         }
-    }
-     stages {
         stage('Comple') {
             steps {
                 sh 'mvn compile'
             }
         }
-    }
-     stages {
         stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
-    }
-     stages {
         stage('Trivy FS Scan') {
             steps {
                 sh 'trivy fs --format table -o fs.html . '
             }
         }
-    }
-     stages {
         stage('Sonarqube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube_server') {
@@ -47,15 +37,11 @@ pipeline {
                 }
             }
         }
-    } 
-    stages {
         stage('Build') {
             steps {
                 sh ' mvn package'
             }
         }
-    }
-     stages {
         stage('Publish artifact') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'maven.settings', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
@@ -63,7 +49,6 @@ pipeline {
                 }
             }     
          }
-    }
  /*  stages {
         stage('Hello') {
             steps {
