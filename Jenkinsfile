@@ -48,14 +48,32 @@ pipeline {
                 sh 'mvn deploy'
             }
         }     
-     }
- /*  stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+    }
+    stage('Docker Build and Tag') {
+        steps {
+            script {
+                // This step should not normally be used in your script. Consult the inline help for details.
+                withDockerRegistry(credentialsId: 'Docker_Cred', toolName: 'docker') {
+                sh 'docker build -t sreejitheyne/login_page:latest .' 
+                }
             }
         }
     }
+    stage('Trivy Image Scan') {
+        steps {
+            sh 'trivy image --format table -o image.html sreejitheyne/login_page:latest '
+        }
+    }
+    stage('Docker Push') {
+        steps {
+            script {
+                withDockerRegistry(credentialsId: 'Docker_Cred', toolName: 'docker') {
+                sh 'docker push sreejitheyne/login_page:latest'
+                }
+            }
+        }
+    }
+ /*   }
      stages {
         stage('Hello') {
             steps {
