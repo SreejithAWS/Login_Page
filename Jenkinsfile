@@ -31,7 +31,7 @@ pipeline {
     }
       stage('Check SonarQube Server') {
             steps {
-                sh 'curl -I http://3.85.208.12:9000'
+                sh 'curl -I http://54.209.206.172:9000'
             }
         }
     stage('Sonarqube Analysis') {
@@ -49,7 +49,7 @@ pipeline {
     }
     stage('Publish artifact') {
         steps {
-            withMaven(globalMavenSettingsConfig: 'maven.settings', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
+            withMaven(globalMavenSettingsConfig: 'manage-settings', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
                 sh 'mvn deploy'
             }
         }     
