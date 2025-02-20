@@ -31,7 +31,7 @@ pipeline {
     }
       stage('Check SonarQube Server') {
             steps {
-                sh 'curl -I http://3.85.208.12:9000'
+                sh 'curl -I http://54.209.206.172:9000/'
             }
         }
     stage('Sonarqube Analysis') {
