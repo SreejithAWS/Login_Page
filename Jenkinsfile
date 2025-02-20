@@ -29,6 +29,11 @@ pipeline {
             sh 'trivy fs --format table -o fs.html . '
         }
     }
+      stage('Check SonarQube Server') {
+            steps {
+                sh 'curl -I http://3.85.208.12:9000'
+            }
+        }
     stage('Sonarqube Analysis') {
         steps {
             withSonarQubeEnv('sonar-server') {
