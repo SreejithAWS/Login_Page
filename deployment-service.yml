@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: login_page-deployment
+spec:
+  selector:
+    matchLabels:
+      app: login_page
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: login_page
+    spec:
+      containers:
+      - name: login_page
+        image: sreejitheyne/login_page:latest # Updated image to private DockerHub image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: Docker_Cred # Reference to the Docker registry secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login_page-ssvc
+spec:
+  selector:
+    app: login_page
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
