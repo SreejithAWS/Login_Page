@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: login_page-deployment
+  name: loginpage-deployment
 spec:
   selector:
     matchLabels:
-      app: login_page
+      app: loginpage
   replicas: 2
   template:
     metadata:
       labels:
-        app: login_page
+        app: loginpage
     spec:
       containers:
-      - name: login_page
-        image: sreejitheyne/login_page:latest # Updated image to private DockerHub image
+      - name: loginpage
+        image: sreejitheyne/loginpage:latest # Updated image to private DockerHub image
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: login_page-ssvc
+  name: loginpage-ssvc
 spec:
   selector:
-    app: login_page
+    app: loginpage
   ports:
   - protocol: "TCP"
     port: 80
